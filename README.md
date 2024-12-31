@@ -18,6 +18,6 @@ I will define criteria for distributing tokens through the reward system. Users 
 - Validating and adding new blocks to the blockchain.
 The reward system will be automated to ensure that tokens are distributed based on predefined rules and user performance metrics.
 
-#Blockchain integration with Python
+## Blockchain integration with Python
 Using web3.py, I will enable seamless interaction with the deployed blockchain. This integration will allow the Python-based application to manage token transactions, monitor the blockchain for new blocks, and execute smart contract functions. The blockchain connection will be established through an Ethereum node provider like Infura or Alchemy, ensuring reliable and secure interactions.
 
