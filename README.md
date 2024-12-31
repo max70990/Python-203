@@ -2,7 +2,7 @@
 
 # Project description 
 
-## project overview
+## Project overview
 I aim to develop a comprehensive reward system that leverages both blockchain technology and the pybacktestchain library to incentivize users for their contributions to financial backtesting strategies. By integrating cryptocurrency into the backtesting framework, I will create a system that rewards users with tokens for profitable or innovative backtesting results, fostering collaboration and innovation in financial research. My primary objectives are to establish a robust tokenized reward mechanism, enhance backtesting capabilities using pybacktestchain, create seamless blockchain integration, and ensure transparency and accountability in the reward distribution process.
 
 ## Integration of pybacktestchain
