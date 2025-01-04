@@ -12,6 +12,6 @@ dependencies = {typer = "^0.4.0"}
 
 [tool.poetry.dev-dependencies]
 coverage = "^6.0"
-mypy = "^0.9"
+mypy = "^1.14.1"
 pytest = "^7.0"
 ruff = "^0.1.0"
