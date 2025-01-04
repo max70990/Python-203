@@ -1,63 +1,17 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "python203"
 version = "0.1.0"
 description = "Python Boilerplate contains all the boilerplate you need to create a Python package."
-readme = "README.rst"
-authors = [
-  {name = "Maxime", email = "max70990@gmail.com"}
-]
-maintainers = [
-  {name = "Maxime", email = "max70990@gmail.com"}
-]
-classifiers = [
+authors = ["Maxime <max70990@gmail.com>"]
+license = "MIT"
+dependencies = {typer = "^0.4.0"}
 
-]
-license = {text = "MIT license"}
-dependencies = [
-  "typer"
-]
-
-[project.optional-dependencies]
-dev = [
-    "coverage",  # testing
-    "mypy",  # linting
-    "pytest",  # testing
-    "ruff"  # linting
-]
-
-[project.urls]
-
-bugs = "https://github.com/max7090/python203/issues"
-changelog = "https://github.com/max7090/python203/blob/master/changelog.md"
-homepage = "https://github.com/max7090/python203"
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.package-data]
-"*" = ["*.*"]
-
-
-
-
-# Mypy
-# ----
-
-[tool.mypy]
-files = "."
-
-# Use strict defaults
-strict = true
-warn_unreachable = true
-warn_no_return = true
-
-[[tool.mypy.overrides]]
-# Don't require test functions to include types
-module = "tests.*"
-allow_untyped_defs = true
-disable_error_code = "attr-defined"
-
+[tool.poetry.dev-dependencies]
+coverage = "^6.0"
+mypy = "^0.9"
+pytest = "^7.0"
+ruff = "^0.1.0"
