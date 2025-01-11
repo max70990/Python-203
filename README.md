@@ -54,6 +54,6 @@ I choosed Inufura mainly for:
 - Scalability: Handles high request volumes seamlessly.
 
 ### Key Token features
-The RewardToken is an ERC-20 token deployed on the Sepolia testnet with a total fixed supply of 203 tokens. I chose a fixed supply of 203 tokens and disabled additional minting to **preserve the token's value** and prevent devaluation, ensuring a fair and stable reward system.
+The RewardToken is an ERC-20 token deployed on the Sepolia testnet with a total fixed supply of 203 tokens. I chose a fixed supply of 203 tokens and disabled additional minting to preserve the token's value and prevent devaluation, ensuring a **fair** and **stable** reward system.
 
 It is named **Master203token** and uses the symbol **203T**. The token is designed to **incentivize** users for **profitable** backtesting results. The contract is deployed at 0xA0f0a2D53b3476c50F2Cf24307F8a1Cd3c758254 and can be view using Sepolia Etherscan at https://sepolia.etherscan.io/token/0xA0f0a2D53b3476c50F2Cf24307F8a1Cd3c758254
