@@ -15,19 +15,43 @@ The Python203 package leverages:
 
 This system bridges traditional financial research and modern blockchain technology, creating an incentive for users to collaborate and innovate in the field of financial strategy development.
 
-## Integration of pybacktestchain
-As part of the project, I will utilize the pybacktestchain library to enhance the backtesting capabilities. This library will serve as the foundation for running and validating backtesting strategies. I will extend its functionality to incorporate blockchain-based rewards, ensuring that backtesting outputs can seamlessly connect to the tokenized reward system.
+## Explanation of volumebacktest
+The VolumeBacktest Strategy serves as a demonstration of how an end-user's trading strategy might be integrated into the reward system. This strategy leverages trading volume patterns to generate buy or sell signals, a common approach in technical analysis used by financial professionals and retail traders alike. The premise of this strategy is that significant deviations in trading volume, relative to historical averages, can signal potential market opportunities. For instance, unusually high trading volume may indicate heightened interest in a stock and serve as a buy signal, while low trading volume could suggest reduced liquidity or declining interest, triggering a sell signal.
 
-## Cryptocurrency implementation
-The core of the project is the implementation of an ERC-20 token on an Ethereum-compatible blockchain. This cryptocurrency will serve as the reward mechanism, allowing users to earn tokens for their contributions. The token will include essential functionalities such as transferring tokens, minting new tokens, and approving transactions. I will write the smart contract for the token in Solidity, deploy it on Ethereum testnets for testing, and integrate it with Python using web3.py.
+This example is used purely for demonstration purposes, showcasing how the Python203 package evaluates strategies based on their performance metrics (e.g., Sharpe Ratio and Maximum Drawdown) and rewards users accordingly. By including this volume-based strategy, the package demonstrates its flexibility in adapting to user-submitted backtests.
 
-## Reward mechanism
-I will define criteria for distributing tokens through the reward system. Users will earn rewards for:
-- Developing profitable backtesting strategies using pybacktestchain.
-- Contributing innovative or efficient approaches to the framework.
-- Validating and adding new blocks to the blockchain.
-The reward system will be automated to ensure that tokens are distributed based on predefined rules and user performance metrics.
+## Explanation of backtestevaluator
+The BacktestEvaluator class plays a crucial role in the Python203 package by evaluating user-submitted backtests based on two performance metrics: Sharpe Ratio and Maximum Drawdown. These metrics are designed to objectively assess both the profitability and risk of a strategy.
 
-## Blockchain integration with Python
-Using web3.py, I will enable seamless interaction with the deployed blockchain. This integration will allow the Python-based application to manage token transactions, monitor the blockchain for new blocks, and execute smart contract functions. The blockchain connection will be established through an Ethereum node provider like Infura or Alchemy, ensuring reliable and secure interactions.
+To ensure a balanced grading system, the Sharpe Ratio contributes 75% of the final score, reflecting its importance in measuring risk-adjusted returns, while Maximum Drawdown accounts for 25%, highlighting its role in managing risk exposure. This weighted approach ensures that strategies with high returns and controlled risks are rewarded appropriately.
 
+The BacktestEvaluator’s decisions emphasize fairness and precision, aligning rewards with strategies that demonstrate both profitability and sound risk management. By doing so, it sets the foundation for transparent and meaningful tokenized incentives.
+
+## Reward mechanism overview
+### Smart contract on Sepolia testnet
+The reward system uses an ERC-20 smart contract deployed on the Sepolia testnet. Named RewardToken, the contract mints a fixed supply of 203 tokens to the deployer during deployment. Key features include:
+- ERC-20 Standard: Ensures compatibility with wallets and tools.
+- Fixed Supply: Guarantees a transparent and finite reward pool.
+- Purpose: Automates and secures reward distribution for backtesting performance.
+
+Using a smart contract ensures transparency, automation, and trust by leveraging blockchain’s immutable and decentralized nature. 
+I used the Sepolia testnet to safely develop and test the reward mechanism in a realistic Ethereum environment without incurring real-world costs or risks.
+
+### Why I used Hardhat ? 
+I used Hardhat which is a development framework for Ethereum used to streamline smart contract writing, testing, and deployment. 
+It offers:
+- Easy Deployment: Simplified scripts like the provided deploy.js.
+- Powerful Features: Local blockchain simulation, debugging, and gas estimation.
+- Integration: Compatibility with OpenZeppelin and Ethereum libraries.
+
+### Why I used Infura ?
+I used Infura as Infura provides reliable access to the Ethereum network without running a local node. 
+I choosed Inufura mainly for:
+- Ease of Use: Quick connection to Sepolia via an API.
+- Reliability: Stable network access for transactions and interactions.
+- Scalability: Handles high request volumes seamlessly.
+
+### Key Token features
+The RewardToken is an ERC-20 token deployed on the Sepolia testnet with a total fixed supply of 203 tokens. I chose a fixed supply of 203 tokens and disabled additional minting to preserve the token's value and prevent devaluation, ensuring a fair and stable reward system.
+
+It is named Master203token and uses the symbol 203T. The token is designed to incentivize users for profitable backtesting results. The contract is deployed at 0xA0f0a2D53b3476c50F2Cf24307F8a1Cd3c758254 and can be view using Sepolia Etherscan at https://sepolia.etherscan.io/token/0xA0f0a2D53b3476c50F2Cf24307F8a1Cd3c758254
