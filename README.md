@@ -37,6 +37,8 @@ The reward system uses an ERC-20 smart contract deployed on the Sepolia testnet.
 Using a smart contract ensures transparency, automation, and trust by leveraging blockchain’s immutable and decentralized nature. 
 I used the Sepolia testnet to safely develop and test the reward mechanism in a realistic Ethereum environment without incurring real-world costs or risks.
 
+I used the Google Cloud Sepolia Faucet (https://cloud.google.com/application/web3/faucet/ethereum/sepolia) to acquire free Sepolia ETH, which is essential for paying gas fees required to execute transactions on the Sepolia testnet.
+
 ### Why I used Hardhat ? 
 I used Hardhat which is a development framework for Ethereum used to streamline smart contract writing, testing, and deployment. 
 It offers:
@@ -45,7 +47,7 @@ It offers:
 - Integration: Compatibility with OpenZeppelin and Ethereum libraries.
 
 ### Why I used Infura ?
-I used Infura as Infura provides reliable access to the Ethereum network without running a local node. 
+I used Infura as it provides reliable access to the Ethereum network without running a local node. 
 I choosed Inufura mainly for:
 - Ease of Use: Quick connection to Sepolia via an API.
 - Reliability: Stable network access for transactions and interactions.
