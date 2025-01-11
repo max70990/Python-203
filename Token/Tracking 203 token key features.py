@@ -5,8 +5,8 @@ import json
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
-# Replace with your Infura project ID
-INFURA_PROJECT_ID = "f6b751d1f86b42f2bd23af09b4547634"  # Your Infura project ID
+# Infura project ID
+INFURA_PROJECT_ID = "f6b751d1f86b42f2bd23af09b4547634"
 INFURA_URL = f"https://sepolia.infura.io/v3/{INFURA_PROJECT_ID}"
 
 # Initialize Web3
@@ -20,8 +20,8 @@ else:
     logging.error("Failed to connect to the Sepolia testnet.")
     exit()
 
-# Contract address (replace with your deployed contract's address)
-CONTRACT_ADDRESS = "0x48f752Da1eaC771A7250D726d73EE1b1Cd8b7A24"  
+# Contract address 
+CONTRACT_ADDRESS = "0xA0f0a2D53b3476c50F2Cf24307F8a1Cd3c758254"  
 
 # Contract ABI
 CONTRACT_ABI = json.loads('''
@@ -69,46 +69,23 @@ CONTRACT_ABI = json.loads('''
 ]
 ''')
 
-# Initialize the contract
+# Initialize contract
 contract = web3.eth.contract(address=CONTRACT_ADDRESS, abi=CONTRACT_ABI)
 
-# Replace with your deployer's private key
-DEPLOYER_PRIVATE_KEY = "3a078e0c831b014a8ff42a99b0e58718eecd856abf4ca040eaada338b9c33077"  # Replace with your private key
-DEPLOYER_ADDRESS = "0x0390cF896B4a7D984017e6C9D3d17b5A6287a874"  # Replace with your deployer address
-
-# Mint 203 tokens
+# Fetch and print key elements of the token
 try:
-    recipient_address = "0x0390cF896B4a7D984017e6C9D3d17b5A6287a874"  # Replace with the recipient's address
-    mint_amount = web3.to_wei(203, 'ether')  # Convert 203 tokens to Wei (assuming 18 decimals)
-
-    # Build the transaction
-    nonce = web3.eth.get_transaction_count(DEPLOYER_ADDRESS)
-    transaction = contract.functions.mint(recipient_address, mint_amount).build_transaction({
-        'from': DEPLOYER_ADDRESS,
-        'nonce': nonce,
-        'gas': 2000000,
-        'gasPrice': web3.to_wei('20', 'gwei'),
-    })
-
-    # Sign the transaction
-    signed_transaction = web3.eth.account.sign_transaction(transaction, DEPLOYER_PRIVATE_KEY)
-
-    # Send the transaction
-    tx_hash = web3.eth.send_raw_transaction(signed_transaction.raw_transaction)
-    logging.info(f"Minted 203 tokens to {recipient_address}. Transaction hash: {web3.to_hex(tx_hash)}")
-
-except Exception as e:
-    logging.error(f"Error minting tokens: {e}")
-
-# Test interaction with the contract
-try:
+    # Get token details
     token_name = contract.functions.name().call()
     token_symbol = contract.functions.symbol().call()
     total_supply = contract.functions.totalSupply().call()
+    deployer_balance = contract.functions.balanceOf("0x0390cF896B4a7D984017e6C9D3d17b5A6287a874").call()
 
+    # Print token information
+    logging.info(f"Token Address: {CONTRACT_ADDRESS}")
     logging.info(f"Token Name: {token_name}")
     logging.info(f"Token Symbol: {token_symbol}")
     logging.info(f"Total Supply: {web3.from_wei(total_supply, 'ether')} tokens")
-except Exception as e:
-    logging.error(f"Error interacting with the contract: {e}")
+    logging.info(f"Deployer's Balance: {web3.from_wei(deployer_balance, 'ether')} tokens")
 
+except Exception as e:
+    logging.error(f"Error fetching token details: {e}")
