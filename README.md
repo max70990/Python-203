@@ -20,7 +20,7 @@ The VolumeBacktest Strategy serves as a demonstration of how an end-user's tradi
 
 This example is used purely for **demonstration purposes**, showcasing how the python203 package evaluates strategies based on their performance metrics (e.g., Sharpe Ratio and Maximum Drawdown) and rewards users accordingly. By including this volume-based strategy, the package demonstrates its flexibility in adapting to user-submitted backtests.
 
-## Explanation of *backtestevaluator*
+## Explanation of backtestevaluator
 The *backtestevaluator* class plays a crucial role in the python203 package by evaluating user-submitted backtests based on two performance metrics: Sharpe Ratio and Maximum Drawdown. These metrics are designed to objectively assess both the profitability and risk of a strategy.
 
 To ensure a **balanced grading system**, the Sharpe Ratio contributes 75% of the final score, reflecting its importance in measuring risk-adjusted returns, while Maximum Drawdown accounts for 25%, highlighting its role in managing risk exposure. This weighted approach ensures that strategies with high returns and controlled risks are rewarded appropriately.
