@@ -9,9 +9,9 @@ To demonstrate this reward system, I developed a volume-based backtesting strate
 
 The Python203 package leverages:
 
-    Pybacktestchain for advanced backtesting capabilities,
-    ERC-20 token contracts for blockchain-based rewards,
-    A streamlined process to evaluate user-submitted strategies and distribute rewards securely.
+- Pybacktestchain for advanced backtesting capabilities,
+- ERC-20 token contracts for blockchain-based rewards,
+- A streamlined process to evaluate user-submitted strategies and distribute rewards securely.
 
 This system bridges traditional financial research and modern blockchain technology, creating an incentive for users to collaborate and innovate in the field of financial strategy development.
 
