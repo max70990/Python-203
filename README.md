@@ -3,7 +3,7 @@
 # Project description 
 
 ## Project overview
-The **python203** package is designed to create a tokenized reward system that **remunerates** users for submitting **profitable** financial backtests. The reward mechanism evaluates backtests based on two key performance metrics: **Sharpe Ratio** (representing risk-adjusted returns) and **Maximum Drawdown** (representing risk exposure). Users are rewarded with **cryptocurrency tokens** proportional to the quality of their backtesting results.
+The **python203** package is designed to create a tokenized reward system that **remunerates** users for submitting **profitable** financial backtests. The reward mechanism evaluates backtests based on three key performance metrics: **Final Portfolio Value** (representing the absolute profitability), Sharpe Ratio** (representing risk-adjusted returns) and **Maximum Drawdown** (representing risk exposure). Users are rewarded with **cryptocurrency tokens** proportional to the quality of their backtesting results.
 
 To demonstrate this reward system, I developed a **volume-based** backtesting strategy as an example of a user-submitted strategy. This strategy uses trading signals derived from volume patterns to showcase how backtests are evaluated and rewarded. By integrating blockchain technology into the framework, the package ensures seamless reward distribution, transparency, and accountability.
 

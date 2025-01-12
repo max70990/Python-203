@@ -42,30 +42,50 @@ class BacktestRating:
 @dataclass
 class BacktestEvaluator:
     def compute_metrics(self, trades: dict):
-                
         logging.info("Calculating performance metrics...")
 
+        # Validate input
         if not trades:
             logging.error("No trades executed. Cannot calculate metrics.")
-            return {"Sharpe Ratio": None, "Maximum Drawdown": None}
+            return {
+                "Sharpe Ratio": None,
+                "Maximum Drawdown": None,
+                "Final Portfolio Value": None
+            }
 
-        # Ensure necessary keys exist
-        portfolio_values = trades.get("Final Portfolio Value")
-        daily_returns = trades.get("Daily Returns", None)
+        # Extract necessary data
+        portfolio_value = trades.get("Final Portfolio Value")
+        daily_returns = trades.get("Daily Returns")
+        max_drawdown = trades.get("Maximum Drawdown")
 
-        if not daily_returns:
-            logging.error("Daily Returns are missing. Cannot calculate metrics.")
-            return {"Sharpe Ratio": None, "Maximum Drawdown": None}
+        if portfolio_value is None:
+            logging.error("Final Portfolio Value is missing. Cannot calculate metrics.")
+            return {
+                "Sharpe Ratio": None,
+                "Maximum Drawdown": None,
+                "Final Portfolio Value": None
+            }
+
+        if daily_returns is None or not isinstance(daily_returns, pd.Series):
+            logging.error("Daily Returns are missing or not a valid pandas Series. Cannot calculate metrics.")
+            return {
+                "Sharpe Ratio": None,
+                "Maximum Drawdown": None,
+                "Final Portfolio Value": portfolio_value
+            }
 
         # Calculate Sharpe Ratio
-        risk_free_rate = 0.01  # Annualized risk-free rate
-        daily_excess_returns = daily_returns - (risk_free_rate / 252)
-        sharpe_ratio = daily_excess_returns.mean() / daily_excess_returns.std()
+        try:
+            risk_free_rate = 0.01  # Annualized risk-free rate
+            daily_excess_returns = daily_returns - (risk_free_rate / 252)
+            sharpe_ratio = daily_excess_returns.mean() / daily_excess_returns.std()
+        except Exception as e:
+            logging.error(f"Error calculating Sharpe Ratio: {e}")
+            sharpe_ratio = None
 
-        # Maximum Drawdown (already computed in Tradesignals)
-        max_drawdown = trades.get("Maximum Drawdown", None)
-
+        # Return the computed metrics
         return {
             "Sharpe Ratio": sharpe_ratio,
-            "Maximum Drawdown": max_drawdown
+            "Maximum Drawdown": max_drawdown,
+            "Final Portfolio Value": portfolio_value
         }
