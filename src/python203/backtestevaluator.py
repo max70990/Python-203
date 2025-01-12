@@ -20,7 +20,7 @@ class BacktestRating:
         if sharpe_ratio is None or max_drawdown is None or final_portfolio_value is None:
             return 0.0  # Insufficient data yields the lowest score
 
-        # Sharpe Ratio Score (50% weight)
+        # Sharpe Ratio Score (25% weight)
         sharpe_score = min(2.5, max(0, sharpe_ratio / self.sharpe_threshold * 2.5))
 
         # Maximum Drawdown Score (25% weight, inverted scale)
@@ -29,7 +29,7 @@ class BacktestRating:
         else:
             max_drawdown_score = min(2.5, max(0, (1 + max_drawdown / self.max_drawdown_threshold) * 2.5))
 
-        # Final Portfolio Value Score (25% weight, scaled to a maximum of 2.5)
+        # Final Portfolio Value Score (50% weight)
         initial_portfolio_value = 1_000_000  
         portfolio_growth = final_portfolio_value / initial_portfolio_value
         portfolio_value_score = min(5, max(0, (portfolio_growth - 1) * 5))  # Scaled based on growth above initial value
