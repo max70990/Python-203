@@ -11,25 +11,21 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 @dataclass
 class Tradesignals:
     broker: Broker
-    max_allocation: float = 0.2  # Maximum allocation per asset
+    max_allocation: float = 0.15  # Maximum allocation per asset
 
     def execute_trades(self, data: pd.DataFrame):
-        """
-        Execute trades based on the volume-based strategy signals.
 
-        Args:
-            data (pd.DataFrame): Market data with signals.
-
-        Returns:
-            pd.DataFrame: A DataFrame of executed trades (transaction log).
-        """
         if "Position" not in data.columns:
             raise KeyError("Missing 'Position' column in data. Ensure signals are generated.")
 
-        detailed_signals = []  # To track detailed signals for the first 20 days
+        portfolio_values = []  # To track portfolio value over time
+
         for date in sorted(data["Date"].unique()):
             daily_data = data[data["Date"] == date]
             prices = dict(zip(daily_data["ticker"], daily_data["Adj Close"]))
+
+            # Calculate current portfolio value
+            portfolio_value = self.broker.get_portfolio_value(market_prices=prices)
 
             for _, row in daily_data.iterrows():
                 ticker = row["ticker"]
@@ -42,22 +38,36 @@ class Tradesignals:
                     quantity = min(max_quantity, int(self.broker.get_cash_balance() / price))
                     if quantity > 0:
                         self.broker.buy(ticker, quantity, price, date)
-                        detailed_signals.append({"Date": date, "Ticker": ticker, "Signal": "BUY", "Price": price})
 
                 elif signal == -1:  # Sell signal
                     if ticker in self.broker.positions:
                         self.broker.sell(ticker, self.broker.positions[ticker].quantity, price, date)
-                        detailed_signals.append({"Date": date, "Ticker": ticker, "Signal": "SELL", "Price": price})
 
-            # Stop tracking after 5 days
-            if len(detailed_signals) >= 5:
-                break
+            # Append portfolio value for the current date
+            portfolio_values.append({"Date": date, "Portfolio Value": portfolio_value})
 
-        logging.info("Detailed signals for the first 5 days:")
-        for signal in detailed_signals:
-            logging.info(signal)
+        # Combine portfolio values into a DataFrame
+        portfolio_values_df = pd.DataFrame(portfolio_values)
 
-        return self.broker.transaction_log
+        # Compute Final Portfolio Value
+        final_portfolio_value = portfolio_values_df.iloc[-1]["Portfolio Value"]
+
+        # Compute Metrics
+        portfolio_values_df["Daily Returns"] = portfolio_values_df["Portfolio Value"].pct_change().dropna()
+        risk_free_rate = 0.01
+        daily_excess_returns = portfolio_values_df["Daily Returns"] - (risk_free_rate / 252)
+        sharpe_ratio = daily_excess_returns.mean() / daily_excess_returns.std()
+
+        rolling_max = portfolio_values_df["Portfolio Value"].cummax()
+        drawdown = (portfolio_values_df["Portfolio Value"] - rolling_max) / rolling_max
+        max_drawdown = drawdown.min()
+
+        # Return final results
+        return {
+            "Final Portfolio Value": final_portfolio_value,
+            "Sharpe Ratio": sharpe_ratio,
+            "Maximum Drawdown": max_drawdown
+        }
 
 @dataclass
 class VolumeBacktest:
@@ -72,15 +82,7 @@ class VolumeBacktest:
         self.broker = Broker(cash=self.initial_cash, verbose=self.verbose)
 
     def compute_signals(self, data: pd.DataFrame):
-        """
-        Generate trading signals based on a volume-based strategy.
 
-        Args:
-            data (pd.DataFrame): Market data.
-
-        Returns:
-            pd.DataFrame: Data with added trading signals.
-        """
         logging.info("Generating volume-based signals...")
         data = data.sort_values(by=["ticker", "Date"])
 
